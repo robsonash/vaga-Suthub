@@ -90,20 +90,20 @@
           <div class="c-container__input">
             <span class="c-span">Qual é seu pet ?</span>
             <select
-              @focus="$v.tipoAnimal.$touch()"
+              @focus="$v.animal.$touch()"
               class="c-input"
-              v-model="tipoAnimal"
-              @change="getRacas(tipoAnimal)"
+              v-model="animal"
+              @change="getRacas(animal)"
             >
               <option disabled value>Qual é seu Pet</option>
               <option value="dog">Cachorro</option>
               <option value="cat">Gato</option>
             </select>
             <span
-              v-if=" $v.tipoAnimal.$invalid"
+              v-if=" $v.animal.$invalid"
               class="c-span--aviso"
               :class="{
-                invalid: $v.tipoAnimal.$invalid,
+                invalid: $v.animal.$invalid,
               }"
             >
               Selecione uma opção !
@@ -114,22 +114,22 @@
                <div> <span class="c-span">Qual a raça do seu pet ?</span></div>
            <div class="c-container__input__span--aviso">
             <select
-              @focus="$v.tipoSelecionado.$touch()"
+              @focus="$v.racaSelecionada.$touch()"
               class="c-input"
-              v-model="tipoSelecionado"
+              v-model="racaSelecionada"
             >
               <option disabled value>Raça do Pet</option>
-              <option v-for="breed in breeds" :key="breed">
-                {{ breed }}
+              <option v-for="raca in racas" :key="raca">
+                {{ raca }}
               </option>
               <option>Outro</option>
             </select>
             <span
-              v-if="$v.tipoSelecionado.$dirty && $v.tipoSelecionado.$invalid"
+              v-if="$v.racaSelecionada.$dirty && $v.racaSelecionada.$invalid"
               class="c-span--aviso"
               :class="{
                 invalid:
-                  $v.tipoSelecionado.$dirty && $v.tipoSelecionado.$invalid,
+                  $v.racaSelecionada.$dirty && $v.racaSelecionada.$invalid,
               }"
             >
               Selecione uma opção !
@@ -139,17 +139,17 @@
 
           <div 
            class="c-container__input"
-            v-if="this.tipoSelecionado === 'Outro'">
+            v-if="this.racaSelecionada === 'Outro'">
 
 
-               <div> <span class="c-span">Qual raça ?</span></div>
+               <div> <span class="c-span">Qual a raça do seu {{animal}} ?</span></div>
               <div class="c-container__input__span--aviso">
             <input
               @input="$v.outro.$touch()"
               class="c-input"
               v-model.trim="outro"
               type="text"
-              :placeholder="`Qual a raça do seu ${tipoAnimal}`"
+              :placeholder="`Qual a raça do seu ${animal}`"
             />
             <span
               v-if="$v.outro.$dirty && $v.outro.$invalid"
@@ -277,7 +277,7 @@
             </div>
           </div>
           <div class="c-container__botao">
-            <button class="c-botao" type="submit" @click="enviar()">Enviar</button>
+            <button class="c-botao" type="submit" @click="enviarFormulario()">Enviar</button>
           </div>
         </form>
       </div>
@@ -289,6 +289,7 @@
 import Loading from "../components/Loading.vue";
 import { required, minLength, between } from "vuelidate/lib/validators";
 import { getCep } from "@/../services.js";
+import {  mapMutations } from "vuex";
 export default {
   name: "contact",
   components:{
@@ -319,10 +320,10 @@ Loading
       bairro: "",
       cidade: "",
       estado: "",
-      tipoAnimal: "",
+      animal: "",
       outro: "Não sei a raça",
-      breeds: {},
-      tipoSelecionado: "",
+      racas: {},
+      racaSelecionada: "",
       dog: ["Poodle", "Pinscher", "Labrador", "Shih Tzu", "Yorkshire Terrier"],
       cat: ["Persa", "Siamês", "Maine Coon", "Ragdoll", "Sphynx"],
     };
@@ -345,10 +346,10 @@ Loading
       required,
       minLength: minLength(14),
     },
-    tipoAnimal: {
+    animal: {
       required,
     },
-    tipoSelecionado: {
+    racaSelecionada: {
       required,
     },
     outro: {
@@ -373,22 +374,29 @@ Loading
   watch: {
     data() {
       this.verificarIdade();
-
-      //this.data = this.data.split('-').reverse().join('/')
     },
   },
 
   created() {},
   methods: {
-    enviar(){
-    console.log("enviou")
+   ...mapMutations(["CRIAR_FORMULARIO"]),
+
+    enviarFormulario(){
+
+      this.CRIAR_FORMULARIO();
+ 
     },
+    
+
+
+
+
     getRacas(tipoAnimal) {
       this.tipoSelecionado = "";
       if (tipoAnimal === "dog") {
-        this.breeds = this.dog;
+        this.racas = this.dog;
       } else {
-        this.breeds = this.cat;
+        this.racas = this.cat;
       }
     },
     Cep() {
