@@ -5,7 +5,8 @@
         <h1 class="c-container__h1">Contato</h1>
       </div>
       <div class="c-container__form">
-        <form v-on:submit.prevent="enviar()" class="c-form">
+        <form v-on:submit.prevent class="c-form">
+          
           <div class="c-container__input">
             <span class="c-span">Nome</span>
             <div class="c-container__input__nome">
@@ -55,6 +56,7 @@
           <div class="c-container__input">
             <span class="c-span">Data de nascimento</span>
             <input
+            
               class="c-input"
               type="date"
               @keyup="verificarIdade()"
@@ -72,6 +74,7 @@
             <span class="c-span">CPF</span>
             <input
               @input="$v.cpf.$touch()"
+              :class="{ invalid: $v.cpf.$dirty && $v.cpf.$invalid}"
               class="c-input"
               type="text"
               v-model="cpf"
@@ -96,8 +99,8 @@
               @change="getRacas(animal)"
             >
               <option disabled value>Qual é seu Pet</option>
-              <option value="dog">Cachorro</option>
-              <option value="cat">Gato</option>
+              <option value="cachorro">Cachorro</option>
+              <option value="gato">Gato</option>
             </select>
             <span
               v-if=" $v.animal.$invalid"
@@ -114,22 +117,22 @@
                <div> <span class="c-span">Qual a raça do seu pet ?</span></div>
            <div class="c-container__input__span--aviso">
             <select
-              @focus="$v.racaSelecionada.$touch()"
+              @focus="$v.raca.$touch()"
               class="c-input"
-              v-model="racaSelecionada"
+              v-model="raca"
             >
               <option disabled value>Raça do Pet</option>
-              <option v-for="raca in racas" :key="raca">
-                {{ raca }}
+              <option v-for="dataRaca in racas" :key="dataRaca">
+                {{ dataRaca }}
               </option>
-              <option>Outro</option>
+              <option>Outra</option>
             </select>
             <span
-              v-if="$v.racaSelecionada.$dirty && $v.racaSelecionada.$invalid"
+              v-if="$v.raca.$dirty && $v.raca.$invalid"
               class="c-span--aviso"
               :class="{
                 invalid:
-                  $v.racaSelecionada.$dirty && $v.racaSelecionada.$invalid,
+                  $v.raca.$dirty && $v.raca.$invalid,
               }"
             >
               Selecione uma opção !
@@ -139,24 +142,24 @@
 
           <div 
            class="c-container__input"
-            v-if="this.racaSelecionada === 'Outro'">
+            v-if="this.raca === 'Outra'">
 
 
                <div> <span class="c-span">Qual a raça do seu {{animal}} ?</span></div>
               <div class="c-container__input__span--aviso">
             <input
-              @input="$v.outro.$touch()"
-              class="c-input"
-              v-model.trim="outro"
+              @input="$v.outraRaca.$touch()"
+              class="c-input c-input--especial"
+              v-model.trim="outraRaca"
               type="text"
               :placeholder="`Qual a raça do seu ${animal}`"
             />
             <span
-              v-if="$v.outro.$dirty && $v.outro.$invalid"
+              v-if=" $v.outraRaca.$invalid"
               class="c-span--aviso"
-              :class="{ invalid: $v.outro.$dirty && $v.outro.$invalid }"
+              :class="{ invalid: $v.outraRaca.$invalid }"
             >
-              Este campo deve conter raça de seu pet !
+              Este campo deve conter a raça de seu pet !
             </span>
              </div>
           </div>
@@ -205,7 +208,9 @@
                     v-model.trim="cep"
                     @keyup="Cep()"
                     type="text"
+                    v-mask="['#####-###']"
                     placeholder="Digite seu cep:"
+                    
                     />
                    <span
                      v-if="$v.cep.$dirty && $v.cep.$invalid"
@@ -228,6 +233,22 @@
                     Preencha o campo rua !
                   </span>
             </div>
+
+             <div class="c-container__endereco">
+              <input
+               @input="$v.numero.$touch()"
+                v-model.trim="numero"
+                class="c-input"
+                type="text"
+                placeholder="Número:"
+              />
+              <span 
+                  v-if="$v.numero.$dirty && $v.numero.$invalid"
+              class="c-span--aviso">
+                    Preencha o campo número (máximo de 6 números) !
+                  </span>
+            </div>
+
             <div class="c-container__endereco">
               <input
                  @input="$v.bairro.$touch()"
@@ -272,7 +293,7 @@
               <span 
                 v-if="$v.estado.$dirty && $v.estado.$invalid"
               class="c-span--aviso">
-                    Preencha o campo estado !
+                    Preencha o campo estado (Apenas as siglas) !
                   </span>
             </div>
           </div>
@@ -287,9 +308,14 @@
 
 <script>
 import Loading from "../components/Loading.vue";
-import { required, minLength, between } from "vuelidate/lib/validators";
+
+import { required, minLength,maxLength, between, requiredIf } from "vuelidate/lib/validators";
 import { getCep } from "@/../services.js";
-import {  mapMutations } from "vuex";
+import {  mapState,mapMutations } from "vuex";
+
+const Swal = require("sweetalert2");
+//import Swal from 'sweetalert2';
+
 export default {
   name: "contact",
   components:{
@@ -297,7 +323,7 @@ Loading
   },
   data() {
     return {
-      money: {
+        money: {
         decimal: ",",
         thousands: ".",
         prefix: "R$ ",
@@ -317,19 +343,23 @@ Loading
       renda: "",
       cep: "",
       rua: "",
+      numero:"",
       bairro: "",
       cidade: "",
       estado: "",
       animal: "",
-      outro: "Não sei a raça",
+      outraRaca: "",
+      selecionado:false,
+
       racas: {},
-      racaSelecionada: "",
-      dog: ["Poodle", "Pinscher", "Labrador", "Shih Tzu", "Yorkshire Terrier"],
-      cat: ["Persa", "Siamês", "Maine Coon", "Ragdoll", "Sphynx"],
+      raca: "",
+      cachorro: ["Poodle", "Pinscher", "Labrador", "Shih Tzu", "Yorkshire Terrier"],
+      gato: ["Persa", "Siamês", "Maine Coon", "Ragdoll", "Sphynx"],
     };
   },
 
   validations: {
+   
     nome: {
       required,
       minLength: minLength(3),
@@ -346,63 +376,141 @@ Loading
       required,
       minLength: minLength(14),
     },
+     renda: {
+      required,
+    },
     animal: {
       required,
     },
-    racaSelecionada: {
+    raca: {
       required,
     },
-    outro: {
-      required,
+     
+    outraRaca: {
+      required: requiredIf(function(){
+        return this.selecionado;
+      })
     },
     cep:{
-      required
+      required,
+      minLength: minLength(9),
+      maxLength: maxLength(9),
     },
     rua:{
+      required
+    },
+    numero:{
       required,
+       maxLength: maxLength(6),
     },
     bairro:{
-      required,
+      required
     },
     cidade:{
-      required,
+      required
   },
     estado:{
     required,
+    maxLength: maxLength(2),
   }
   },
   watch: {
     data() {
       this.verificarIdade();
     },
+    raca(){
+      this.mudaestado();
+    }
   },
-
+   computed:{
+    ...mapState(["formulario"])
+},
   created() {},
   methods: {
    ...mapMutations(["CRIAR_FORMULARIO"]),
 
-    enviarFormulario(){
+  mudaestado(){
+        if(this.raca === "Outra"){
+        this.selecionado = true;
+        }else{
+          this.selecionado = false;
+          this.outraRaca = '';
+        }
+        
+  },
 
-      this.CRIAR_FORMULARIO();
- 
-    },
+
+
+
+
+
+
+    enviarFormulario(){
     
+      
+    if(!this.$v.$invalid){
+      if(this.raca === "Outra"){
+      this.raca = this.outraRaca;
+      }
+      //this.data = this.data.split('-').reverse().join('/');
+
+      this.CRIAR_FORMULARIO({
+        nome:this.nome,
+        sobreNome:this.sobreNome,
+        data:this.data,
+        cpf:this.cpf,
+        renda:this.renda,
+
+        animal:this.animal,
+        raca:this.raca,
+
+        cep:this.cep,
+        rua:this.rua,
+        numero:this.numero,
+        bairro:this.bairro,
+        cidade:this.cidade,
+        estado:this.estado,
+
+      });
+     
+      this.formularioTerminado = JSON.parse(JSON.stringify(this.formulario))
+      console.log(this.formularioTerminado);
+
+      Swal.fire({
+  position: 'top-center',
+  icon: 'success',
+  title: 'Formulario enviado com sucesso',
+  showConfirmButton: true,
+ // timer: 1500
+})
+    } else {
+        Swal.fire({
+  position: 'top-center',
+  icon: 'error',
+  title: 'Preencha corretamente o formulário',
+  showConfirmButton: true,
+    });
+
+       this.$v.$touch();
+    }
+    },
 
 
 
 
     getRacas(tipoAnimal) {
       this.tipoSelecionado = "";
-      if (tipoAnimal === "dog") {
-        this.racas = this.dog;
+      if (tipoAnimal === "cachorro") {
+        this.racas = this.cachorro;
       } else {
-        this.racas = this.cat;
+        this.racas = this.gato;
       }
     },
     Cep() {
      
       const cep = this.cep.replace(/\D/g, "");
       if (cep.length === 8) {
+        this.cep.replace("-", "");
         this.loading = true;
         getCep(cep)
           .then((response) => {
@@ -423,19 +531,13 @@ Loading
         .split("-")
         .reverse()
         .join("/");
-      console.log(dataNova);
       const dia = dataNova.split("/")[0];
       const mes = dataNova.split("/")[1];
       const ano = dataNova.split("/")[2];
-      console.log("dia " + dia);
-      console.log("mes " + mes);
-      console.log("ano " + ano);
       this.dia = dia;
       this.mes = mes;
       this.ano = ano;
-      console.log(this.dia);
-      console.log(this.mes);
-      console.log(this.ano);
+
       this.calcularIdade(this.dia, this.mes, this.ano);
     },
 
@@ -453,7 +555,6 @@ Loading
         quantos_anos--;
       }
       this.idade = quantos_anos;
-      console.log(this.idade);
       return quantos_anos < 0 ? 0 : quantos_anos;
     },
   },
@@ -485,8 +586,7 @@ Loading
   letter-spacing: 0.5px;
   color: black;
 }
-.c-form {
-}
+
 .c-container__input {
   display: flex;
   flex-direction: column;
@@ -520,6 +620,9 @@ Loading
   font-size: 16px;
   font-weight: 400;
 }
+.c-input--especial{
+      border: 2px solid #88e5f5
+}
 .c-span {
   font-family: "Roboto", Sans-serif;
   font-size: 15px;
@@ -549,6 +652,7 @@ select:focus {
   border-color: #e8e8e8;
   outline: 0;
 }
+
 .c-input.invalid {
   border-color: red;
 }
@@ -574,6 +678,7 @@ select:focus {
     box-shadow: 0px 8px 13px #dccfcf;
     font-weight: bold;
 }
+
 .c-botao:hover{
    transform: scale(1.1);
   background: #5bb347;

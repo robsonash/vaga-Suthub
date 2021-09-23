@@ -12,8 +12,10 @@ export default new Vuex.Store({
             cpf: "",
             renda: "",
             animal: "",
-            racaSelecionada: "",
+            raca: "",
+            cep: "",
             rua: "",
+            numero: "",
             bairro: "",
             cidade: "",
             estado: ""
@@ -28,10 +30,11 @@ export default new Vuex.Store({
             state.formulario.renda = payload.renda;
 
             state.formulario.animal = payload.animal;
-            state.formulario.racaSelecionada = payload.racaSelecionada;
+            state.formulario.raca = payload.raca;
 
-
+            state.formulario.cep = payload.cep;
             state.formulario.rua = payload.rua;
+            state.formulario.numero = payload.numero;
             state.formulario.bairro = payload.bairro;
             state.formulario.cidade = payload.cidade;
             state.formulario.estado = payload.estado;
