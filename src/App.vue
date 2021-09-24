@@ -1,19 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <div class="c-logo">
-        <img src="@/assets/logo.png">
-      </div>
-      <div class="c-links">
-      <router-link to="/">Home</router-link> |
-         <router-link to="/formulario">Formulário</router-link> |
-      <router-link to="/paises">Países</router-link> 
-   
-      </div>
-    </div>
-    <router-view/>
+
+      <TheHeader />
+     <router-view/>
+
   </div>
 </template>
+<script>
+import TheHeader from "./components/TheHeader.vue"
+
+export default {
+components:{
+  TheHeader
+}
+}
+
+</script>
+
+
+
 
 <style>
 html, body, div, span, applet, object, iframe,
@@ -59,6 +64,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+  *{
+  font-family: "Roboto", Sans-serif;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -69,7 +78,7 @@ table {
   justify-content: center;
   flex-direction: column;
      align-items: center;
-  margin: auto 100px
+ /*  margin: auto 100px */
 }
 
 #nav {
