@@ -7,14 +7,14 @@ import money from 'v-money'
 import VueTheMask from 'vue-the-mask'
 
 
-import Loading from "@/components/Loading.vue";
+import Carregando from "@/components/Carregando.vue";
 import VueSweetalert2 from 'vue-sweetalert2';
 Vue.use(VueSweetalert2)
 
 Vue.use(Vuelidate)
 Vue.use(money, { precision: 4 })
 Vue.use(VueTheMask)
-Vue.component("Loading", Loading);
+Vue.component("Carregando", Carregando);
 Vue.config.productionTip = false
 Vue.filter("numeroPreco", valor => {
     valor = Number(valor);

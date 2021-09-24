@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Countries from '../views/Countries.vue'
-import Contact from '../views/Contact.vue'
+import Paises from '../views/Paises.vue'
+import Formulario from '../views/Formulario.vue'
 
 Vue.use(VueRouter)
 
@@ -12,14 +12,14 @@ const routes = [{
         component: Home
     },
     {
-        path: '/countries',
-        name: 'countries',
-        component: Countries
+        path: '/paises',
+        name: 'paises',
+        component: Paises
     },
     {
-        path: '/contact',
-        name: 'contact',
-        component: Contact
+        path: '/formulario',
+        name: 'formulario',
+        component: Formulario
     }
 ]
 

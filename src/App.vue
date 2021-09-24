@@ -1,9 +1,15 @@
 <template>
   <div id="app">
     <div id="nav">
+      <div class="c-logo">
+        <img src="@/assets/logo.png">
+      </div>
+      <div class="c-links">
       <router-link to="/">Home</router-link> |
-      <router-link to="/countries">Countries</router-link> |
-        <router-link to="/contact">Contact</router-link>
+         <router-link to="/formulario">Formulário</router-link> |
+      <router-link to="/paises">Países</router-link> 
+   
+      </div>
     </div>
     <router-view/>
   </div>
@@ -85,4 +91,7 @@ table {
 .v-enter-active{
   transition: all 0.3s;
 } 
+.c-logo{
+  margin-bottom: 10px;
+}
 </style>

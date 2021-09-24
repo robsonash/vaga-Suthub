@@ -2,7 +2,7 @@
   <div>
     <div class="c-container__form">
       <div class="c-container ">
-        <h1 class="c-container__h1">Contato</h1>
+        <h1 class="c-container__h1">Cadastro</h1>
       </div>
       <div class="c-container__form">
         <form v-on:submit.prevent class="c-form">
@@ -11,7 +11,7 @@
             <span class="c-span">Nome</span>
             <div class="c-container__input__nome">
               <input
-                :class="{ invalid: $v.nome.$dirty && $v.nome.$invalid }"
+              
                 @input="$v.nome.$touch()"
                 class="c-input"
                 type="text"
@@ -32,9 +32,7 @@
             <span class="c-span">SobreNome</span>
             <div class="c-container__input__nome">
               <input
-                :class="{
-                  invalid: $v.sobreNome.$dirty && $v.sobreNome.$invalid,
-                }"
+                
                 @input="$v.sobreNome.$touch()"
                 class="c-input"
                 type="text"
@@ -56,11 +54,13 @@
           <div class="c-container__input">
             <span class="c-span">Data de nascimento</span>
             <input
-            
+                
               class="c-input"
-              type="date"
+              type="text"
               @keyup="verificarIdade()"
               v-model="data"
+                v-mask="['##/##/####']"
+                placeholder="Data de nascimento"
             />
             <span class="c-span--aviso invalid" v-if="!$v.idade.between">
               Permitido apenas para quem tem entre
@@ -74,7 +74,7 @@
             <span class="c-span">CPF</span>
             <input
               @input="$v.cpf.$touch()"
-              :class="{ invalid: $v.cpf.$dirty && $v.cpf.$invalid}"
+       
               class="c-input"
               type="text"
               v-model="cpf"
@@ -89,7 +89,24 @@
               Preencha corretamente o campo !
             </span>
           </div>
-
+  <div class="c-container__input">
+            <div><span class="c-span">Renda Mensal </span></div>
+           <div class="c-container__input__span--aviso">
+            <money
+              class="c-input"
+              v-model="renda"
+              v-bind="money"
+              placeholder="Qual a sua renda mensal ?"
+            >
+            </money>
+         
+            <span
+              v-if="this.renda < 1000"
+              class="c-span--aviso invalid"
+              >A sua renda mensal deve ser de no minimo R$: 1.000,00
+            </span>
+               </div>
+          </div>
           <div class="c-container__input">
             <span class="c-span">Qual é seu pet ?</span>
             <select
@@ -167,24 +184,7 @@
 
 
 
-          <div class="c-container__input">
-            <div><span class="c-span">Renda Mensal </span></div>
-           <div class="c-container__input__span--aviso">
-            <money
-              class="c-input"
-              v-model="renda"
-              v-bind="money"
-              placeholder="Qual a sua renda mensal ?"
-            >
-            </money>
-         
-            <span
-              v-if="this.renda < 1000"
-              class="c-span--aviso invalid"
-              >A sua renda mensal deve ser de no minimo R$: 1.000,00
-            </span>
-               </div>
-          </div>
+        
 
 
 
@@ -196,8 +196,8 @@
               <h2 class="c-container__h2">Endereço</h2>
             </div>
 
-              <div v-if="this.loading">
-                <Loading :key="loading"/>
+              <div v-if="this.carregando">
+                <Carregando :key="carregando"/>
                </div>
 
 
@@ -307,7 +307,7 @@
 </template>
 
 <script>
-import Loading from "../components/Loading.vue";
+import Carregando from "../components/Carregando.vue";
 
 import { required, minLength,maxLength, between, requiredIf } from "vuelidate/lib/validators";
 import { getCep } from "@/../services.js";
@@ -317,9 +317,9 @@ const Swal = require("sweetalert2");
 //import Swal from 'sweetalert2';
 
 export default {
-  name: "contact",
+  name: "formulario",
   components:{
-Loading
+Carregando
   },
   data() {
     return {
@@ -331,7 +331,7 @@ Loading
         precision: 2,
         masked: false,
       },
-      loading: false,
+      carregando: false,
       nome: "",
       sobreNome: "",
       data: "",
@@ -371,6 +371,11 @@ Loading
     idade: {
       required,
       between: between(18, 65),
+    },
+    data:{
+
+  minLength: minLength(10),
+
     },
     cpf: {
       required,
@@ -452,8 +457,6 @@ Loading
       if(this.raca === "Outra"){
       this.raca = this.outraRaca;
       }
-      //this.data = this.data.split('-').reverse().join('/');
-
       this.CRIAR_FORMULARIO({
         nome:this.nome,
         sobreNome:this.sobreNome,
@@ -511,7 +514,7 @@ Loading
       const cep = this.cep.replace(/\D/g, "");
       if (cep.length === 8) {
         this.cep.replace("-", "");
-        this.loading = true;
+        this.carregando = true;
         getCep(cep)
           .then((response) => {
             this.rua = response.data.logradouro;
@@ -522,7 +525,7 @@ Loading
           .catch((error) => console.log(error))
 
           .finally(() => {
-            this.loading = false;
+            this.carregando = false;
           });
       }
     },
@@ -539,6 +542,7 @@ Loading
       this.ano = ano;
 
       this.calcularIdade(this.dia, this.mes, this.ano);
+    
     },
 
     calcularIdade(dia_aniversario, mes_aniversario, ano_aniversario) {
@@ -556,7 +560,10 @@ Loading
       }
       this.idade = quantos_anos;
       return quantos_anos < 0 ? 0 : quantos_anos;
+        
     },
+  
+
   },
 };
 </script>
@@ -601,7 +608,7 @@ Loading
 .c-container__endereco {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   flex-wrap: wrap;
   min-height: 40px;
@@ -633,14 +640,19 @@ Loading
   color: #bfbfbf;
   letter-spacing: 1px;
 }
+.invalid{
+ text-align: left;
+}
 .c-span.invalid {
   color: red;
+ 
   
 }
 .c-span--aviso {
   color: red;
   font-size: 13px;
   margin-top: 5px;
+   text-align: left;
 }
 .c-span--aviso.invalid {
   color: red;
@@ -673,7 +685,7 @@ select:focus {
     border: none;
     color: white;
     cursor: pointer;
-    background: #4b863e;
+   background: #007c74;
     border-radius: 5px;
     box-shadow: 0px 8px 13px #dccfcf;
     font-weight: bold;
@@ -681,7 +693,8 @@ select:focus {
 
 .c-botao:hover{
    transform: scale(1.1);
-  background: #5bb347;
+  
+   background: #42b983;
 }
 @media only screen and (max-width: 800px) {
  .c-input {

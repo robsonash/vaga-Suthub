@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="loading">
-       <Loading :key="loading"/>
+    <div v-if="carregando">
+       <Carregando :key="carregando"/>
     </div>
     <transition>
     <div class="c-container" v-if="countries">
@@ -206,17 +206,17 @@
 
 <script>
 
-import Loading from "../components/Loading.vue";
+import Carregando from "../components/Carregando.vue";
 import { api } from "@/../services.js";
 
 export default {
-  name: "countries",
+  name: "paises",
   components:{
-   Loading
+   Carregando
   },
   data() {
     return {
-      loading: false,
+      carregando: false,
       countries: null,
       flag: null
     }; 
@@ -227,7 +227,7 @@ export default {
 
   methods: {
     getCountries() {
-      this.loading = true;
+      this.carregando = true;
       api
         .get(`name/brasil`)
         .then((response) => {
@@ -237,7 +237,7 @@ export default {
         .catch((error) => console.log(error))
 
         .finally(() => {
-          this.loading = false;
+          this.carregando = false;
         });
     },
   },
