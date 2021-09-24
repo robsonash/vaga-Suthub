@@ -1,5 +1,6 @@
 <template>
   <div>
+    <transition>
     <div class="c-container__form">
       <div class="c-container ">
         <h1 class="c-container__h1">Cadastro</h1>
@@ -303,6 +304,7 @@
         </form>
       </div>
     </div>
+    </transition>
   </div>
 </template>
 
@@ -480,18 +482,20 @@ Carregando
       console.log(this.formularioTerminado);
 
       Swal.fire({
-  position: 'top-center',
-  icon: 'success',
-  title: 'Formulario enviado com sucesso',
-  showConfirmButton: true,
- // timer: 1500
+       position: 'top-center',
+       icon: 'success',
+       title: 'Formulario enviado com sucesso',
+       confirmButtonColor: '#007c74',
+       showConfirmButton: true,
+ 
 })
     } else {
-        Swal.fire({
-  position: 'top-center',
-  icon: 'error',
-  title: 'Preencha corretamente o formulário',
-  showConfirmButton: true,
+      Swal.fire({
+       position: 'top-center',
+       icon: 'error',
+       title: 'Preencha corretamente o formulário',
+       confirmButtonColor: '#007c74',
+       showConfirmButton: true,
     });
 
        this.$v.$touch();

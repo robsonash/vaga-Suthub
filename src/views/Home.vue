@@ -1,24 +1,19 @@
 <template>
-  <div class="c-container">
-    <transition>
-  <div class="c-container--flexivel">
-      
-  <img class="c-img" src="../assets/cachorroGato.png">
-  
-    
-  <div class="container__p">
-    <p class="c-p">Seus melhores amigos agora com a liberdade que precisam</p>
-  </div>
-  
-   <div class="container__botao">
-          <router-link :to="{ name: 'formulario' }">
-             <button  class="c-botao">Cadastre-se</button>
-          </router-link>
-  </div>
-  
+ <div class="c-container">
+  <transition>
+    <div class="c-container--flexivel">
+     <img class="c-img" src="../assets/cachorroGato.png">
+      <div class="container__p">
+       <p class="c-p">Seus melhores amigos agora com a liberdade que precisam</p>
+      </div>
+      <div class="container__botao">
+       <router-link :to="{ name: 'formulario' }">
+        <button  class="c-botao">Cadastre-se</button>
+       </router-link>
+      </div>
+     </div>
+  </transition>
  </div>
-    </transition>
-  </div>
 </template>
 
 <script>
