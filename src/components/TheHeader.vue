@@ -1,7 +1,7 @@
 <template>
    <div id="nav">
       <div class="c-logo">
-        <img src="@/assets/logo.png">
+        <img class="c-nav__img" src="@/assets/logo.png">
       </div>
       <div class="c-links">
       <router-link to="/">Home</router-link> |
@@ -19,5 +19,9 @@ name: "TheHeader"
 </script>
 
 <style>
-
+@media only screen and (max-width: 300px) {
+.c-nav__img {
+     max-width: 250px
+}
+}
 </style>

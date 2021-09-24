@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "https://restcountries.eu/rest/v2/"
+    baseURL: "https://servicodados.ibge.gov.br/api/v1/paises/"
 
 });
 

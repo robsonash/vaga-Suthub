@@ -57,7 +57,6 @@ export default {
 .c-botao{
     color: white;
     background: #e91e63;
-   /*  box-shadow: 1px 0px 5px 0px #e91e63; */
     margin-top: 30px;
     padding: 10px 60px;
     border-radius: 10px;

@@ -689,7 +689,7 @@ select:focus {
     border: none;
     color: white;
     cursor: pointer;
-   background: #007c74;
+    background: #007c74;
     border-radius: 5px;
     box-shadow: 0px 8px 13px #dccfcf;
     font-weight: bold;

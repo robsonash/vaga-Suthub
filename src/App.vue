@@ -103,4 +103,10 @@ table {
 .c-logo{
   margin-bottom: 10px;
 }
+@media only screen and (max-width: 300px) {
+#nav {
+     padding: 15px;
+}
+}
+
 </style>

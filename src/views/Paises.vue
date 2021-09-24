@@ -4,202 +4,76 @@
        <Carregando :key="carregando"/>
     </div>
     <transition>
-    <div class="c-container" v-if="countries">
-      <div class="c-container__flag"> <img class="c-flag" :src="this.flag" /></div>
-        <div class="c-list">
-          <div class="c-list--left">
-            <p class="c-titulo">{{ countries[0].name }}</p>
-            <p class="c-subTitulo"> {{countries[0].altSpellings[3]}}</p>
-            <p class="c-text"><span class="c-text__span">Capital:</span> {{ countries[0].capital }}</p>
-            <p class="c-text"><span class="c-text__span">Código de discagem:</span> +{{ countries[0].callingCodes[0] }}</p>
-            <p class="c-text"><span class="c-text__span">Região:</span> {{ countries[0].region }}</p>
-            <p class="c-text"><span class="c-text__span">Sub-Região:</span> {{ countries[0].subregion }}</p>
-            <p class="c-text"><span class="c-text__span">População:</span> {{ countries[0].population }}</p>
-            <p class="c-text"><span class="c-text__span">Dominio de topo:</span> {{ countries[0].topLevelDomain[0] }}</p>
-          </div>
-                 
-           <div class="c-list--center">
-            <ul class="c-list--center__ul"> 
-             <span class="c-text__span">Moeda: </span>
-              <li class="c-list--center__li" v-for="currenci in countries[0].currencies" :key="currenci.code">
-               <p class="c-text__span">Nome:<span class="c-text">{{currenci.name}}</span></p>       
-               <p class="c-text__span">Código:<span class="c-text">{{currenci.code}}</span></p>
-               <p class="c-text__span">Simbolo:<span class="c-text">{{ currenci.symbol}}</span></p> 
-              </li>
-            </ul>
-           </div>
-
- 
-           <div class="c-list--center">
-            <ul class="c-list--center__ul"> 
-              <span class="c-text__span">Traduções: </span>
-               <li class="c-list--center__li" v-for="language in countries[0].languages" :key="language.code">
-                <p class="c-text__span">iso639_1:<span class="c-text">{{language.iso639_1}}</span></p>       
-                <p class="c-text__span">iso639_2:<span class="c-text">{{language.iso639_2}}</span></p>
-                <p class="c-text__span">name:<span class="c-text">{{ language.name}}</span></p> 
-                <p class="c-text__span">nativeName:<span class="c-text">{{ language.nativeName}}</span></p> 
-               </li>
-              </ul>
-             </div>
-
-             <div class="c-list--center">
-               <ul class="c-list--center__ul"> 
-                <span class="c-text__span">Fuso horários: </span>
-                 <li class="c-list--center__li" v-for="timezone in countries[0].timezones" :key="timezone">
-                  <p class="c-text__span"><span class="c-text">{{timezone}}</span></p>       
-                 </li>
-               </ul>
-             </div>
-
-             <div class="c-list--center">
-               <ul class="c-list--center__ul"> 
-                <span class="c-text__span">Traduções </span>
-                 <li class="c-list--center__li" v-for="(translation, index) in countries[0].translations" :key="translation.index">
-                  <p class="c-text__span">{{index}}:<span class="c-text">{{translation}}</span></p>       
-                 </li>
-               </ul>
-             </div>
-
-             <div class="c-list--center">
-               <ul class="c-list--center__ul"> 
-                <span class="c-text__span">Cordenadas</span>
-                 <p class="c-text__span">Latitude<span class="c-text">{{countries[0].latlng[0]}}</span></p>
-                 <p class="c-text__span">Longitude<span class="c-text">{{countries[0].latlng[1]}}</span></p>        
-               </ul>
-             </div>
+    <div class="c-container" v-if="paises">
+      <div class="c-container__buscar">
+       <div class="c-container__label">
+        <span class="c-label">Coloque a sigla do seu país</span>
+        </div>
+        <div class="c-container__input">
+             <input
              
+              v-model="sigla"
+              class="c-input"
+              type="text"
+              maxlength="2"
+              placeholder="Coloque a sigla do país">
+        </div>
+         <div class="c-container__botao">
+          <button 
+             @click="getPaises(sigla)"
+            class="c-botao"
+            type="button">Buscar
+          </button>
+        </div>
+        </div>
+        <div class="c-container__paises__informacoes">
+         <div class="c-container__paises">
+         <div class="c-paises"
+         v-for="pais in paises" :key="pais.index"
+         >
+           <div class="c-paises__container__h2">
+            <h2 class="c-paises__h2">{{pais.nome.abreviado}}</h2>
+          </div>
+      <table>
+       
+         
+   
+         <tr>
+          <td class="c-td__nome">Capital:</td>
+          <td class="c-td__valor">{{pais.governo.capital.nome}}</td>
+        </tr>
+         <tr>
+          <td class="c-td__nome">Area:</td>
+          <td class="c-td__valor">{{pais.area.total}}</td>
+        </tr>
+         <tr>
+          <td class="c-td__nome">Unidade:</td>
+          <td class="c-td__valor">{{pais.area.unidade.nome}}</td>
+        </tr>
+         <tr>
+          <td class="c-td__nome">Simbolo:</td>
+          <td class="c-td__valor">{{pais.area.unidade.símbolo}}</td>
+        </tr>
+         <tr>
+          <td class="c-td__nome">Localização:</td>
+          <td class="c-td__valor">{{pais.localizacao.regiao.nome}}</td>
+        </tr>
+        <tr>
+          <td class="c-td__nome">ID:</td>
+          <td class="c-td__valor">{{pais.id["ISO-3166-1-ALPHA-2"]}}</td>
+        </tr>
+       
+         
+</table>
+</div>
 
 
-
-        <ul>
-          
-          <li>
-            <p>topLevelDomain: {{ countries[0].topLevelDomain[0] }}</p>
-          </li>
-          <li>
-            <p>alpha2Code: {{ countries[0].alpha2Code }}</p>
-          </li>
-          <li>
-            <p>alpha3Code: {{ countries[0].alpha3Code }}</p>
-          </li>
-          <li>
-            <p>callingCodes: </p>
-          </li>
-          <li>
-            <p>capital: {{ countries[0].capital }}</p>
-          </li>
-           <li>
-               <ul>
-                   Spellings: 
-                   <li v-for="spelling in countries[0].altSpellings" :key="spelling">
-                   {{ spelling }}
-                   </li>
-               </ul>
-          </li>
-          <li>
-            <p>Region: {{ countries[0].region }}</p>
-          </li>
-          <li>
-            <p>Subregion: {{ countries[0].subregion }}</p>
-          </li>
-          <li>
-            <p>Population: {{ countries[0].population }}</p>
-          </li>
-           <li>
-               <ul>
-                   latlng: 
-                   <li v-for="latlng in countries[0].latlng" :key="latlng">
-                   {{ latlng }}
-                   </li>
-               </ul>
-          </li>
-          <li>
-            <p>Demonym: {{ countries[0].demonym }}</p>
-          </li>
-           <li>
-            <p>Area: {{ countries[0].area }}</p>
-          </li>
-          <li>
-            <p>Gini: {{ countries[0].gini }}</p>
-          </li>
-            <li>
-               <ul>
-                   Timezones: 
-                   <li v-for="timezone in countries[0].timezones" :key="timezone">
-                   {{ timezone }}
-                   </li>
-               </ul>
-          </li>
-           <li>
-               <ul>
-                   Borders: 
-                   <li v-for="border in countries[0].borders" :key="border">
-                   {{ border }}
-                   </li>
-               </ul>
-          </li>
-           <li>
-            <p>Native name: {{ countries[0].nativeName }}</p>
-          </li>
-           <li>
-            <p>Numeric code: {{ countries[0].numericCode }}</p>
-          </li>
-          <li>
-               <ul>
-                   Currencies: 
-                   <li v-for="currenci in countries[0].currencies" :key="currenci.code">
-                   {{ currenci.code }}<br>
-                     {{ currenci.name }}<br>
-                       {{ currenci.symbol }}<br>
-                   </li>
-               </ul>
-          </li>
-           <li>
-               <ul>
-                   Languages: 
-                   <li v-for="language in countries[0].languages" :key="language.code">
-                   {{ language.code }}<br>
-                     {{ language.name }}<br>
-                       {{ language.symbol }}<br>
-                   </li>
-               </ul>
-          </li>
-            <li>
-               <ul>
-                   Translations: 
-                   <li v-for="translation in countries[0].translations" :key="translation.index">
-                   {{ translation }}<br>
-                    
-                   </li>
-               </ul>
-          </li>
-           <li> RegionalBlocs:
-               <ul>
-                 <li><p> Name {{ countries[0].regionalBlocs[0].name }}</p></li>
-                 <li><p> Acronym {{ countries[0].regionalBlocs[0].acronym }}</p></li>
- <li>otherAcronyms
-     <ul>
-        <li v-for="regionalBloc in countries[0].regionalBlocs[0].otherAcronyms" :key="regionalBloc.index">
-         {{ regionalBloc }}<br>
-        </li>
-     </ul>
-</li>
-<li>otherNames
-     <ul>
-        <li v-for="regionalBloc in countries[0].regionalBlocs[0].otherNames" :key="regionalBloc.index">
-         {{ regionalBloc }}<br>
-        </li>
-     </ul>
-</li>
-               </ul>  
-          </li>
-        <li><p> Cioc {{ countries[0].cioc }}</p></li>
-
-
-
-        </ul>
-  </div>
+         
+         
+         </div>
+        </div>
       </div>
+     
     </transition>
   </div>
 </template>
@@ -217,22 +91,23 @@ export default {
   data() {
     return {
       carregando: false,
-      countries: null,
-      flag: null
+      paises: null,
+      sigla: ""
     }; 
   },
   created() {
-    this.getCountries();
+    this.getPaises("br");
   },
 
   methods: {
-    getCountries() {
+    getPaises(sigla) {
       this.carregando = true;
+      console.log(sigla);
       api
-        .get(`name/brasil`)
+        .get(sigla)
         .then((response) => {
-          this.countries = response.data; 
-            this.flag = response.data[0].flag; 
+          this.paises = response.data; 
+            //this.flag = response.data[0].flag; 
         })
         .catch((error) => console.log(error))
 
@@ -248,56 +123,155 @@ img.naturalWidth / 2 */
 
 <style scoped>
 .c-container{
-display: flex;
+
 }
-.c-flag{
-    max-width: 500px;  
-    border-radius: 10px;
-    box-shadow: -1px 2px 20px 0px #7d7777;
+.c-input{
+
+  padding: 10px;
+  font-family: "Roboto", Sans-serif;
+  background-color: rgba(255, 255, 255, 0);
+  border-color: #e8e8e8;
+  border-radius: 0px 0px 0px 0px;
+  box-shadow: -1px 4px 5px #f7f1f1;
+  border: 1px solid #e8e8e8;
+  font-size: 16px;
+  font-weight: 400;
+}
+.c-input textarea:focus,
+input:focus,
+select:focus {
+  box-shadow: 0 0 1px 0;
+  border-color: #e8e8e8;
+  outline: 0;
+}
+.c-container__buscar{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.c-container__label{
+    padding: 10px;
+    font-family: "Roboto", Sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 10px;
+    color: #bfbfbf;
+    letter-spacing: 1px;
+
+}
+.c-container__input{
+
+    padding: 10px;
+
+}
+.c-container__botao{
+      padding: 10px;
+}
+.c-botao{
+
+    transition: all 0.3s;
+    min-width: 210px;
+    padding: 10px 30px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background: #007c74;
+    border-radius: 5px;
+    box-shadow: 0px 8px 13px #dccfcf;
+    font-weight: bold;
+
+}
+.c-botao:hover{
+  transform: scale(1.1);
+    background: #42b983;
+}
+.c-paises__titulos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.c-texto{
+ font-weight: bold;
+ font-family: "Roboto", Sans-serif;
+}
+.c-paises__span {
+  color: #42b983;
+}
+.c-paises{
+    margin: 10px;
+    cursor: pointer;
+    border-color: #e8e8e8;
+    transition: all 0.3s;
+    border-radius: 0px 0px 0px 0px;
+    box-shadow: -1px 4px 5px #f7f1f1;
+    padding: 10px 10px;
+
+}
+.c-paises:hover{
+  transform: scale(1.1);
+}
+.c-paises__p {
+  
+ color: black;
+}
+.c-paises__container__span{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     margin-right: 10px;
 }
-.c-list{
+.c-paises__container__p{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.c-container__paises__informacoes{
+    display: grid;
+    grid-template-columns: 1fr minmax(200px, 400px);
+    grid-gap: 30px;
+}
+table {
    
 }
-.c-list--left{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+.c-td__nome{
+  color: #42b983;
+  font-weight: bold;
+  text-align: left;
 }
- .c-list--center{
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto;
-    justify-content: center;
-   
+.c-td__valor{
+  color: black;
+  font-weight: bold;
+  margin-left: 10px;
+  text-align:left
+}
+.c-paises__container__h2{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  align-items: center;
+  
+}
+.c-paises__h2{
  
-  }
-  .c-list--center__ul{
-        border-radius: 10px;
-    border: 6px solid #e7e6eb;
-  }
-  .c-list--center__li{
-
-  }
-.c-titulo{
- 
-    font-size: 2rem;
+    background: #00968817;
+    padding: 5px 30px;
+    color: #42b987;
+    box-shadow: 0px 0px 1px;
     font-weight: bold;
-    color: #009b3a
+    border-radius: 5px;
 }
-.c-subTitulo{
-    font-size: 20px;
-    color: #009b3a;
-    font-weight: bold;
-    margin-bottom: 10px;
+@media only screen and (max-width: 600px) {
+ .c-container__buscar {
+      flex-direction: column;
+ }
+ .c-container__paises__informacoes{
+   display: block;
+ }
 }
-.c-text{
-      color: black;
-      font-weight: bold;
-      margin-bottom: 2px;
-}
-.c-text__span{
-  color: #009b3ac4;}
- 
 </style>
