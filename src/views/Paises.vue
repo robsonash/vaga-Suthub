@@ -27,10 +27,12 @@
         </div>
         </div>
         <div class="c-container__paises__informacoes">
-         <div class="c-container__paises">
-         <div class="c-paises"
-         v-for="pais in paises" :key="pais.index"
-         >
+      
+          
+         <div class="c-container__paises" v-for="pais in paises" :key="pais.index">
+      <router-link :to="{name:'pais',params: {pais: pais.id['ISO-3166-1-ALPHA-2']}}"> 
+
+         <div class="c-paises">
            <div class="c-paises__container__h2">
             <h2 class="c-paises__h2">{{pais.nome.abreviado}}</h2>
           </div>
@@ -69,8 +71,9 @@
 
 
          
-         
+          </router-link>
          </div>
+        
         </div>
       </div>
      
@@ -265,6 +268,9 @@ table {
     box-shadow: 0px 0px 1px;
     font-weight: bold;
     border-radius: 5px;
+}
+a{
+  text-decoration: none;
 }
 @media only screen and (max-width: 600px) {
  .c-container__buscar {
