@@ -161,7 +161,7 @@ max-width: 1200px;
 }
 @media only screen and (max-width: 1300px) {
  .c-container{
-     margin: auto 50px;
+     margin: auto 100px;
  }
  @media only screen and (max-width: 810px) {
    .c-container__informacoes{
@@ -176,7 +176,7 @@ max-width: 1200px;
      font-size: 2.1rem;
      }
      .c-container[data-v-521d9ed6] {
-    margin: auto 10px;
+       margin: auto 10px;
  }
  }
 
