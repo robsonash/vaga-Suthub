@@ -4,6 +4,9 @@ import Home from '../views/Home.vue'
 import Formulario from '../views/Formulario.vue'
 import Paises from '../views/Paises.vue'
 import Pais from '../views/Pais.vue'
+import Especial from '../views/Especial.vue'
+import Idioma from '../views/Idioma.vue'
+import Bloco from '../views/Bloco.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +20,7 @@ const routes = [{
         name: 'formulario',
         component: Formulario
     },
+
     {
         path: '/paises',
         name: 'paises',
@@ -27,8 +31,26 @@ const routes = [{
         name: "pais",
         component: Pais,
         props: true,
+    },
+    {
+        path: '/outros',
+        name: 'especial',
+        component: Especial,
+    },
+    {
+        path: '/outros/:idioma',
+        name: 'idioma',
+        component: Idioma,
+        props: true,
+    },
+    {
+        path: '/outros/paises-do-bloco-regional/:bloco',
+        name: 'paises-do-bloco-regional',
+        component: Bloco,
+        props: true,
     }
 ]
+
 
 const router = new VueRouter({
     mode: 'history',

@@ -6,7 +6,8 @@
       <div class="c-links">
       <router-link to="/">Home</router-link> |
       <router-link to="/formulario">Formulário</router-link> |
-      <router-link to="/paises">Países</router-link> 
+      <router-link to="/paises">Países</router-link> |
+        <router-link to="/outros">Outros</router-link> 
    
       </div>
     </div>
