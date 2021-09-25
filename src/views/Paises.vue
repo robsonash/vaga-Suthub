@@ -37,9 +37,6 @@
             <h2 class="c-paises__h2">{{pais.nome.abreviado}}</h2>
           </div>
       <table>
-       
-         
-   
          <tr>
           <td class="c-td__nome">Capital:</td>
           <td class="c-td__valor">{{pais.governo.capital.nome}}</td>
@@ -63,9 +60,7 @@
         <tr>
           <td class="c-td__nome">ID:</td>
           <td class="c-td__valor">{{pais.id["ISO-3166-1-ALPHA-2"]}}</td>
-        </tr>
-       
-         
+        </tr>       
 </table>
 </div>
 
@@ -105,12 +100,12 @@ export default {
   methods: {
     getPaises(sigla) {
       this.carregando = true;
-      console.log(sigla);
+ 
       api
         .get(sigla)
         .then((response) => {
           this.paises = response.data; 
-            //this.flag = response.data[0].flag; 
+       
         })
         .catch((error) => console.log(error))
 
@@ -125,9 +120,7 @@ img.naturalWidth / 2 */
 </script>
 
 <style scoped>
-.c-container{
 
-}
 .c-input{
 
   padding: 10px;
@@ -272,6 +265,7 @@ table {
 a{
   text-decoration: none;
 }
+
 @media only screen and (max-width: 600px) {
  .c-container__buscar {
       flex-direction: column;
@@ -280,4 +274,5 @@ a{
    display: block;
  }
 }
+
 </style>

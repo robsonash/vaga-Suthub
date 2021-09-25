@@ -65,7 +65,7 @@ table {
 	border-spacing: 0;
 }
 
-  *{
+  * {
   font-family: "Roboto", Sans-serif;
 }
 #app {
@@ -102,6 +102,9 @@ table {
 } 
 .c-logo{
   margin-bottom: 10px;
+}
+a.router-link-active {
+  color: #42b983;
 }
 @media only screen and (max-width: 300px) {
 #nav {

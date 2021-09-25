@@ -19,9 +19,13 @@ name: "TheHeader"
 </script>
 
 <style>
+a.router-link-active {
+  color: #42b983;
+}
 @media only screen and (max-width: 300px) {
 .c-nav__img {
      max-width: 250px
 }
+  
 }
 </style>

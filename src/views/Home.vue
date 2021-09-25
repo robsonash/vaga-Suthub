@@ -69,4 +69,14 @@ export default {
     box-shadow: 1px 0px 5px 0px #e91e63;
     transform: scale(1.1);
 }
+@media only screen and (max-width: 300px) {
+.c-nav__img {
+     max-width: 250px
+}
+   .c-img{
+
+     max-width: 250px;
+     
+   } 
+}
 </style>
