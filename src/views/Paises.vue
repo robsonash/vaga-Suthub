@@ -7,7 +7,7 @@
     <div class="c-container" v-if="paises">
       <div class="c-container__buscar">
        <div class="c-container__label">
-        <span class="c-label">Coloque a sigla do seu país</span>
+        <span class="c-label">Coloque a sigla para pesquisar o país</span>
         </div>
         <div class="c-container__input">
              <input
@@ -115,8 +115,7 @@ export default {
     },
   },
 };
-/* img.naturalHeight / 2
-img.naturalWidth / 2 */
+
 </script>
 
 <style scoped>
