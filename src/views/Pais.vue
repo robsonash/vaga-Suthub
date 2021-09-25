@@ -161,9 +161,12 @@ max-width: 1200px;
 }
 @media only screen and (max-width: 1300px) {
  .c-container{
-     margin: auto 100px;
+     margin: auto 50px;
  }
  @media only screen and (max-width: 810px) {
+   .c-container__informacoes{
+  
+   }
      .c-h2{
      font-size: 3.0rem;
      }

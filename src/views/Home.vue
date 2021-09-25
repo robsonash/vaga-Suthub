@@ -40,6 +40,7 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 60px;
 }
 .c-img {
   max-width: 300px;
