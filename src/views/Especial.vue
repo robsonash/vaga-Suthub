@@ -325,6 +325,11 @@ a li:hover{
      box-shadow: -1px 4px 5px #8bc34a59;
      
 }
+.c-container{
+
+    margin-bottom: 60px;
+
+}
 @media only screen and (max-width: 600px) {
   .c-container__buscar {
     flex-direction: column;

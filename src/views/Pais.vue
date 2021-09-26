@@ -108,6 +108,9 @@ methods: {
  a.router-link-active {
   color: #42b983!important;
 }
+.c-container{
+    margin-bottom: 60px;
+}
 .c-container__informacoes{
 max-width: 1200px;
 }

@@ -7,7 +7,9 @@
            <div class="c-container">
                <ul>
                <li v-for="pais in paises" :key="pais.index">
-               {{pais.name}}
+                 <p>{{pais.name}}</p> 
+                <p>Latitude{{pais.latlng[0]}}</p> 
+                <p>Longitude{{pais.latlng[1]}}</p> 
                </li>
                </ul>
            </div>
