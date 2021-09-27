@@ -7,7 +7,7 @@
            <div class="c-container">
                <ul>
                <li v-for="pais in paises" :key="pais.index">
-                 <p>{{pais.name}}</p> 
+                <p>{{pais.name}}</p> 
                 <p>Latitude{{pais.latlng[0]}}</p> 
                 <p>Longitude{{pais.latlng[1]}}</p> 
                </li>
@@ -33,15 +33,21 @@ data(){
     }
 },
 created(){
-      this.getPaisesDoBloco();
+  
+      this.getPaisesDoBloco(`regionalbloc/${this.bloco}`);
 },
+ beforeRouteUpdate(to, from, next) {
+    this.getPaisesDoBloco(`regionalbloc/${to.params.bloco}`);
+    next();
+  },
 
   methods: {
-    getPaisesDoBloco() {
+    getPaisesDoBloco(parametro) {
+
       this.carregando = true;
 
       api2
-        .get(`/regionalbloc/${this.bloco}`)
+        .get(parametro)
         .then((response) => {
           this.paises = response.data;
         })
@@ -49,6 +55,8 @@ created(){
 
         .finally(() => {
           this.carregando = false;
+          
+       
         });
     },
   },
@@ -73,4 +81,5 @@ li {
 .c-container{
     margin-bottom: 60px;
 }
+
 </style>

@@ -6,63 +6,80 @@
     <div>
       <h1 class="c-container__label">Blocos Regionais</h1>
       <div class="c-container__ul">
-      <ul>
-
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'eu' }}">
+        <ul>
+          <!-- <router-link  :to="{name: 'bloco',params: { bloco: 'eu' }}">
      <li>EU (European Union)</li>
-</router-link>
+</router-link> -->
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'EFTA' }}">
-        <li>EFTA (Associação Europeia de Comércio Livre))</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'EFTA' } }">
+            <li>EFTA (Associação Europeia de Comércio Livre))</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'CARICOM' }}">
-        <li>CARICOM (Comunidade do Caribe)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'CARICOM' } }">
+            <li>CARICOM (Comunidade do Caribe)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'PA' }}">
-        <li>PA (Aliança do Pacífico)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'PA' } }">
+            <li>PA (Aliança do Pacífico)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'UA' }}">
-        <li>UA (União Africana)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'UA' } }">
+            <li>UA (União Africana)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'USAN' }}">
-        <li>USAN (União das Nações Sul-Americanas)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'USAN' } }">
+            <li>USAN (União das Nações Sul-Americanas)</li>
+          </router-link>
 
- <router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'EEU' }}">
-        <li>EEU (União Econômica da Eurásia)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'EEU' } }">
+            <li>EEU (União Econômica da Eurásia)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'AL' }}">
-        <li>AL (Liga Árabe)</li>
- </router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'AL' } }">
+            <li>AL (Liga Árabe)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'ASEAN' }}">
-        <li>ASEAN (Associação das Nações do Sudeste Asiático)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'ASEAN' } }">
+            <li>ASEAN (Associação das Nações do Sudeste Asiático)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'CAIS' }}">
-        <li>CAIS (Central American Integration System)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'CAIS' } }">
+            <li>CAIS (Central American Integration System)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'CEFTA' }}">
-        <li>CEFTA (Acordo de Livre Comércio da Europa Central)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'CEFTA' } }">
+            <li>CEFTA (Acordo de Livre Comércio da Europa Central)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'NAFTA' }}">
-        <li>NAFTA (Acordo de Livre Comércio da América do Norte)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'NAFTA' } }">
+            <li>NAFTA (Acordo de Livre Comércio da América do Norte)</li>
+          </router-link>
 
-<router-link  :to="{name: 'paises-do-bloco-regional',params: { bloco: 'SAARC' }}">
-        <li>SAARC (Associação do Sul da Ásia para Cooperação Regional)</li>
-</router-link>
+          <router-link :to="{ name: 'bloco', params: { bloco: 'SAARC' } }">
+            <li>SAARC (Associação do Sul da Ásia para Cooperação Regional)</li>
+          </router-link>
+        </ul>
+        <div class="c-container__input">
+          <select v-model="bloco" class="c-input">
+            <option disabled value
+              >Veja uma lista de países por bloco regional</option
+            >
 
-      </ul>
+            <option value="EU">
+              EU (European Union)
+            </option>
+            <option value="EFTA">
+             EFTA (Associação Europeia de Comércio Livre))
+            </option>
+            <!--    <router-link  :to="{name: 'bloco',params: { bloco: 'eu' }}">
+                  </router-link> -->
+          </select>
+        </div>
+
+        <router-view />
       </div>
     </div>
+
     <transition>
       <div class="c-container" v-if="paises">
         <div class="c-container__buscar">
@@ -78,7 +95,7 @@
             />
           </div>
           <div class="c-container__botao">
-            <button @click="getPaises(nome)" class="c-botao" type="button">
+            <button @click="getPaises('/name/' + nome)" class="c-botao" type="button">
               Buscar
             </button>
           </div>
@@ -96,24 +113,15 @@
                 <img class="c-img" :src="pais.flags[1]" />
               </div>
               <div class="c-paises__container__h2">
-                <h2 class="c-paises__h2">{{ pais.name }}</h2>
+               <h2 class="c-paises__h2">{{ pais.name }}</h2>
+             
               </div>
-              <table>
-                <!--     
-          <router-link :to="{name:'pais',params: {pais: pais.id['ISO-3166-1-ALPHA-2']}}">  -->
-                <p class="c-td__nome">idiomas:</p>
-                <tr v-for="idioma in pais.languages" :key="idioma.name">
-                  <router-link
-                    class="c-idioma"
-                    :to="{
-                      name: 'idioma',
-                      params: { idioma: idioma.iso639_1 },
-                    }"
-                  >
-                    <td class="c-td__valor">{{ idioma.name }}</td>
-                  </router-link>
-                </tr>
-              </table>
+              <div class="c-pais__link">
+               <router-link :to="{name:'outroPais', params: { pais: pais.name }}"
+                class="c-botao c-botao--mais">
+                Ver mais
+              </router-link>
+              </div>
             </div>
 
             <!-- </router-link> -->
@@ -128,6 +136,7 @@
 import Carregando from "../components/Carregando.vue";
 import { api2 } from "@/../services.js";
 export default {
+  name: "outros",
   components: {
     Carregando,
   },
@@ -136,18 +145,29 @@ export default {
       carregando: false,
       paises: "",
       nome: "",
+      bloco: "",
+      novo:""
     };
   },
   created() {
-    this.getPaises("brasil");
+    this.getPaises("all");
   },
+  watch: {
+    bloco(bloco) {
+    console.log(bloco)
+     this.novo =  this.bloco
+      console.log(this.novo)
+    return this.$router.push({ name: "bloco", params: {bloco: this.novo} })
 
+    },
+  },
   methods: {
     getPaises(nome) {
+      this.paises = '';
       this.carregando = true;
 
       api2
-        .get(`/name/${nome}`)
+        .get(`${nome}`)
         .then((response) => {
           this.paises = response.data;
         })
@@ -180,6 +200,8 @@ select:focus {
   box-shadow: 0 0 1px 0;
   border-color: #e8e8e8;
   outline: 0;
+}.c-container__paises{
+  margin: 10px auto;
 }
 .c-container__buscar {
   display: flex;
@@ -218,8 +240,23 @@ select:focus {
   font-weight: bold;
 }
 .c-botao:hover {
-  transform: scale(1.1);
+
+  
   background: #42b983;
+
+
+}
+.c-pais__link{
+  display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.c-botao--mais{
+
 }
 .c-paises__titulos {
   display: flex;
@@ -266,11 +303,16 @@ select:focus {
   grid-gap: 30px;
 }
 table {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .c-td__nome {
   color: #42b983;
   font-weight: bold;
   text-align: left;
+  margin-bottom: 10px;
 }
 .c-td__valor {
   color: black;
@@ -303,7 +345,6 @@ a {
   text-decoration: none;
 }
 
-
 .c-idioma {
   cursor: pointer;
 }
@@ -312,23 +353,19 @@ a {
   cursor: pointer;
 }
 ul a {
-/*     display: flex; */
+  /*     display: flex; */
 }
 a li {
-    transition: all 0.3s;
-    padding: 10px 30px;
-    color: #4caf50ab;
-  
+  transition: all 0.3s;
+  padding: 10px 30px;
+  color: #4caf50ab;
 }
-a li:hover{   
-     color: #4caf4f;
-     box-shadow: -1px 4px 5px #8bc34a59;
-     
+a li:hover {
+  color: #4caf4f;
+  box-shadow: -1px 4px 5px #8bc34a59;
 }
-.c-container{
-
-    margin-bottom: 60px;
-
+.c-container {
+  margin-bottom: 60px;
 }
 @media only screen and (max-width: 600px) {
   .c-container__buscar {
@@ -338,5 +375,4 @@ a li:hover{
     display: block;
   }
 }
-
 </style>

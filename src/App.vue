@@ -77,7 +77,7 @@ table {
   display: flex;
   justify-content: center;
   flex-direction: column;
-     align-items: center;
+  align-items: center;
  /*  margin: auto 100px */
 }
 

@@ -4,9 +4,12 @@ import Home from '../views/Home.vue'
 import Formulario from '../views/Formulario.vue'
 import Paises from '../views/Paises.vue'
 import Pais from '../views/Pais.vue'
-import Especial from '../views/Especial.vue'
 import Idioma from '../views/Idioma.vue'
 import Bloco from '../views/Bloco.vue'
+
+import Outros from '../views/Outros.vue'
+import OutroPais from '../views/OutroPais.vue'
+
 
 Vue.use(VueRouter)
 
@@ -34,21 +37,39 @@ const routes = [{
     },
     {
         path: '/outros',
-        name: 'especial',
-        component: Especial,
+        name: 'outros',
+        component: Outros,
+        children: [{
+            path: ":bloco",
+            name: "bloco",
+            component: Bloco,
+            props: true
+        }]
     },
     {
-        path: '/outros/:idioma',
-        name: 'idioma',
-        component: Idioma,
+        path: '/outros/pais/:pais',
+        name: 'outroPais',
+        component: OutroPais,
         props: true,
+        children: [{
+            path: "/outros/pais/:pais/paises-com-idioma-em-comum/:idioma",
+            name: "idioma",
+            component: Idioma,
+            props: true
+        }]
     },
-    {
-        path: '/outros/paises-do-bloco-regional/:bloco',
-        name: 'paises-do-bloco-regional',
-        component: Bloco,
-        props: true,
-    }
+    /*  {
+         path: '/outros/idioma',
+         name: 'idioma',
+         component: Idioma,
+         props: true,
+     }, */
+    /*  {
+         path: '/outros/paises-do-bloco-regional/:bloco',
+         name: 'paises-do-bloco-regional',
+         component: Bloco,
+         props: true,
+     } */
 ]
 
 
